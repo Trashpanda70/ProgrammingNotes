@@ -1,0 +1,194 @@
+# Table of Contents
+[[#Hashes]] (Quick review of [[Arrays and Hashes#Hashes]])
+[[#Symbols]]
+- [[#Syntax]]
+- [[#Unique Behavior]]
+	- [[#object_id method]]
+	- [[#Converting Between Strings and Symbols]]
+	- [[#Newer Syntax|Newer Syntax For Hashes]]
+	- [[#Selecting Values From a Hash using select | Selecting Values From a Hash using .select]]
+	- [[#Checking Compatability with response_to|Checking Compatability with .response_to?]]
+
+---
+
+## Hashes
+Hashes are **collections** of key-value pairs, where a unique key is associated with some value. For example:
+```rb
+breakfast = {
+	"bacon" => "tasty",
+	"eggs" => "healthy",
+	"OJ" => "Juicy"
+}
+```
+- Keys must be unique, values can repeat
+
+Can also do `new_hash = Hash.new` to create a new hash object
+- Then add hashes with `new_hash[key] = value`
+
+Can iterate over hashes the same way as an array, by using **.each**
+- Both the key and value need variables between the pipes even if only 1 is used
+```rb
+breakfast.each { |food, desc| 
+	puts breakfast[food]
+}
+# Can replace { with do and } with end. Remember that {} = do..end for this
+```
+
+- Trying to access a hash that does not exit will return `nil`
+- Unless a default value is specified 
+	- `my_hash = Hash.new("default value")`
+
+Above is all review of the [[Arrays and Hashes#Hashes|Hashes]] Notes
+
+## Symbols
+The best keys to use in Hashes.
+- Can also be used to [[#Checking Compatability with response_to|reference method names]] 
+
+Symbols are *immutable*
+- They cannot be changed once they're created
+- Only one copy of a symbol exists at a given time in memory
+- These reasons are why they make good hash keys
+	- Also means they are faster than strings as hash keys
+
+### Syntax
+The Syntax for Symbols is a colon with the name next to it
+- `:symbol_name`
+	- Naming convention just like local variables
+	- Cannot use spaces in the name
+	- Names must start with a lowercase letter or underscore, then can have lowercase letters, underscores, and numbers in the name like normal variables
+
+Note: Symbols do not have values like variables, as they are just that, *symbols*
+- This is why they are used as hash keys
+```rb
+# Cannot do this
+:symbol_two = 2
+
+# Can do this
+my_hash {
+	:symbol_two => 2
+}
+```
+
+### Unique Behavior
+Symbols are not strings, but are more like variables that are used for name only
+- `"string" != :string`
+
+Also, **there can only be one copy of any particular symbol at any given time**
+- This is why they make good keys for hashes, as they cannot be duplicated
+
+#### object_id method
+The `object_id` method can be used to get an object's unique ID
+- This is how Ruby knows whether two objects are the exact same or not
+- object_id *should not be overridden* as it could cause problems
+- The return of the `object_id` method will be different for each object
+	- Even objects with the same fields will be given a different object id
+	- The return of `object_id` is determined by the area in memory an object resides, so setting one object equal to another will result in them having the same object id
+- **A symbol with the same name will always have the same object id** (during runtime)
+	- This id might change between executions, but never during the lifetime of the object
+
+```rb
+# different object id
+a = "string".object_id
+b = "string".object_id
+a == b # false
+
+# make one object reference have the same object id as another
+name = "Joe"
+name2 = "joe"
+name.object_id == name2.object_id # false, due to capitalization
+name2 = name # name2 is now "Joe"
+name.object_id == name2.object_id #true
+
+# example with symbols
+x = :symbol.object_id
+y = :symbol.object_id
+x == y # true
+```
+
+### Converting Between Strings and Symbols
+Symbols can be converted to strings and vice versa
+- Can convert an array of strings (or just one string) to a symbol before using it as a hash key
+- To convert a symbol to string use the `to_s` method (like converting an integer to a string)
+- To convert a string to a symbol use the `to_sym` method
+	- Cannot convert an integer to a symbol because a symbol must start with a letter (or underscore)
+	- Can also use the `.intern` method for the same thing
+
+```rb
+# Symbol to String
+:my_symbol.to_s # -> "my_symbol"
+
+# String to Symbol
+"key_time".to_sym # -> :key_time
+"key_time".intern # -> :key_time
+```
+
+#### Newer Syntax
+Ruby 1.9 changed the syntax of using symbols in hashes
+- The old syntax, called "rocket syntax" (=> looks like a rocket) still works, and is used for strings and other non-symbolic values
+
+**Changes:**
+1. The semicolon goes at the end of the symbol, not the beginning
+2. The rocket is not needed anymore
+
+>Notice this syntax is essentially a JSON file
+
+```rb
+old_hash = {
+	:one => 1,
+	:two => 2,
+	:three => 3
+}
+
+new_hash = {
+	one: 1,
+	two: 2,
+	three: 3
+}
+```
+
+### Selecting Values From a Hash using .select
+Can use the `.select` method to select certain values from a hash that meet the selected criteria
+- Only parameter is a code block (make sure to specify key and value) for filtering (selecting)
+	- Syntax for taking a code block as a parameter: `method(params) {code_block}`
+	- In this case there are no other parameters, so it's just `select {coce_block}`
+- Return value is a *hash* of only the selected values
+- Original hash is not modified
+
+```rb
+# examples of using select
+grades = {
+	bob: 94,
+	alice: 97,
+	jack: 89,
+	jill: 88
+}
+
+grades.select {|k,v| v > 90} # returns {:bob => 94, :alice => 97}
+grades.select {|name, grade| grade == 100} # returns an empty hash (not nil)
+grades.select {|k, v| k == :alice} # returns {:alice => 97} - inefficient way to getting a hash with a specific key
+
+```
+
+### Checking Compatability with .response_to? 
+Can use the `.respond_to?(method)` method to check if an object can receive (has access to, use, whatever terminology) that method.
+- Returns true if it can (so you can call obj.method)
+- Returns false if it cannot (method not applicable for that object)
+- Calling `nil.respond_to?(method)` will return false for every method (notably it will not cause an error)
+- Putting a method that does not exist will return false
+
+Can use symbols (better) or strings to represent the methods
+```rb
+[1, 2, 3].respond_to?(:push) # true
+[1, 2, 3].respond_to?(:to_sym) # false
+
+2.respond_to?(:next) # true (next returns integer after, so in this case 3)
+2.respond_to("next") # true
+
+nil.respond_to?(:chomp) # false
+nil.respond_to?("nothing") # false
+
+"goat".respond_to(:chomppppo) # false
+"gordo".respond_to?(:chomp) # true
+```
+
+For more info on using method symbols as parameters, check out [[Blocks, Procs, and Lambdas#Using Symbols in Procs|Passing Methods as Procs]]

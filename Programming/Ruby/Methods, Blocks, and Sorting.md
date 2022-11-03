@@ -1,0 +1,256 @@
+# Table of Contents
+[[#Methods]]
+- [[#Method Convention]]
+- [[#Optional Arguments]]
+- [[#Splat Arguments|Splay Arguments (Variable Amount of Parameters)]]
+- [[#Return]]
+	- [[#When to Return]]
+- [[#Code Blocks]]
+
+[[#Sorting]]
+- [[#Using the Sort method]]
+- [[#Combined Comparison Operator]]
+- [[#Combining sort and Combined Comparison]]
+
+---
+
+## Methods
+Can be with or without an object
+- No necessary *static* keyword for non-object related methods, only need proper scope
+- Does not matter where method is declared in the file (like Java, unlike C)
+- Method code is not inside curly braces, but an `end` statement level with the header
+- To pass parameters, a type does not need to be defined, just the variable name
+
+```rb
+# defenition
+def method_name
+	# do stuff
+end
+# calling 
+method_name
+x = method_name
+
+# defenition
+def add(a, b)
+	puts a + b
+end
+
+add(5, 8)
+```
+
+### Method Convention
+- If it does not take parameters, do not put parenthesis in header of when calling it
+	- Can call a method by just `method_name` if no parameters are passed
+- Methods that return a boolean end in a question mark `?`
+
+### Optional Arguments
+Can specify arguements as optional (without using splat arguments below)
+- As easy as assigning the parameter a value in the method header
+	- This value will be the default value of the parameter, and will be used if no value is supplied for it in the method call
+- Optional arguments must come after required arguments
+- A methods only argument is allowed to be optional
+
+```rb
+# Example 1 - valid method header
+def useless(arg1, arg2=false, arg3=true, arg4=0)
+
+# All the following are valid calls to the method
+useless("ok", true, false, 10)
+useless("okay")
+useless(nil, false, true)
+useless(10, 15, 20, true) # types are not bound, but this could cause problems in the method code, but the call itself is fine
+
+# Example 2 - valid method header
+def useless2(arg1=13, arg2=[4, 5], arg3=nil)
+
+# All the following are valid calls to the method
+useless2
+useless2(nil, nil, "troll")
+useless2([9, 10], true)
+useless2(false)
+```
+
+### Splat Arguments
+Splat Arguments are method arguments preceded by an asterik `*` that allows the method to take a variable amount of arguments
+- Allows the method to take a variable amount of arguments
+- The arguments will be passed in the form of an array
+	- This means you can reference them with array syntax or iterate using `.each`
+- Non-splat arguments are still required, even if they come after the splat argument
+
+**Technicalities**
+- A splat argument can take 0 arguments and will still run (empty array)
+- A method can have a splat argument as its only argument
+- A method can only take 1 splat argument
+- The splat argument does not need to be the last argument, Ruby will automatically handle which arguments fulfill the arguments after the splat argument and which ones go into the Array
+
+Some examples:
+```rb
+#Example 1
+def print_names(greeting, *names)
+	names.each { |name|
+		puts "#{greeting}, #{name}!"
+	}
+end
+
+#Will print "Hello, Joe!" and do the same for Bob and Alice
+print_names("Hello", "Joe", "Bob", "Alice")
+
+#Will not print anything, since names is empty, names.each will loop zero times
+print_names("Yo")
+
+
+#Example 2 - Not a very useful method because not flexible but just to get point across
+def print_names(greeting, gender, *names, adjective)
+	exec = false #see if names is empty with current knowledge
+	names.each { |name|
+		puts "#{greeting} #{gender} #{name}, you are #{adjective}!"
+		exec = true #If each loop executed
+	}
+	# If the loop did not execute, so names was empty
+	unless exec
+		puts "#{greeting} #{gender}, you seem #{adjective}!"
+	end
+end
+
+# Will print "hello boy Bob, you are Smart!" and do same for Joe and Mark
+# Notice that "Smart" automatically goes to Adjective argument, and is not counted as a name
+print_names("hello", "boy", "Bob", "Joe", "Mark", "Smart")
+
+# Will print "yo girl, you seem nice!" since only 3 arguments are specified
+print_names("yo", "girl", "nice")
+
+
+#Example 3 
+def print_names(*names)
+	puts "yo #{names[0]} my bestie!"
+	puts "I like #{names[1]} a lot too!"
+end
+
+# Valid method call. Will print "yo my bestie!" and "I like a lot too!"
+# Since no arguments are given, calling elements of the array will give nil
+print_names
+```
+
+### Return
+- Since Ruby is dynamically typed, methods do not need a declared return type
+	- The same method could return, or reach the `end` statement without returning
+
+If a variable is assigned to a method return value and that method does not return, the variable value becomes `nil`
+
+Remember that with in-line logic, can use `return if ...` or `return unless ...` to easily check for some condition to determine the return value
+
+```rb
+def add_pos(a, b)
+	return a + b if a > 0 and b > 0
+end
+
+x = add_pos(4, 3) # normal, x will be 7
+x = add_pos(-2, 5) # x becomes nil, since the method did not return
+```
+
+#### When to Return
+There might be a warning on either the command line or (most likely) RubyMine / Rubocop (style checker for Ruby) that says "Unnecessary Return". This is because having the last line as a `return` statement sometimes unnecessary. 
+- Just putting the name of the variable will cause the method to return it, and it's valid syntax
+- The return of the last statement executed in the method could also be returned
+- Generally, return is used when you need to return early and/or used with in-line logic
+
+```rb
+# will return arg + 1, no need for a return statement
+def add_one(arg)
+	arg + 1
+end
+
+# more complex example, returns either "yes" or "no"
+def is_even?(val)
+	val % 2 == 0 ? "yes" : "no"
+end
+
+# return early if negative, so that we do not add two. No return statement necessary for when it is positive. Could also flip logic with unless instead of if
+def might_add_two(arg)
+	return arg if arg < 0
+	arg + 2
+end
+
+# return not necessary, as the result of calling .sort will be returned (regardless of if the exclamation point is included)
+def extra_sort(arr)
+	arr.sort! # same effect if .sort is used (no exclamation point)
+end
+
+# but always good to have a safety check with return to prevent errors
+def extra_sort_better(arr)
+	return if arr == nil
+	arr.sort # same effect if .sort! is used
+end
+
+# another cool way to do the same thing as above
+def extra_sort_better_cooler(arr)
+	return nil unless arr #returns nil unless arr exists (is not nil)
+	arr.sort
+end
+
+```
+
+### Code Blocks
+A code block is like a nameless method 
+- Examples are the `loop` block, or a `.each` loop
+- Under the hood, these are working just like methods
+	- For example: [[Arrays and Hashes#Iterating with Arrays using each|.each]] is just a method taking a block of code as a parameter
+	- This mechanic will become important! (See [[#Combining sort and Combined Comparison]])
+
+## Sorting
+### Using the Sort method
+Ruby has a built in `.sort` method for Arrays.
+- Called by just doing `array_name.sort`
+- Can also use `array_name.sort!` to sort `array_name` itself rather than assigning it to a new array
+- The `.sort` method uses QuickSort
+
+### Combined Comparison Operator
+The *combined comparison operator* is `<=>` and is used to compare two objects in Ruby
+- Usage: `obj1 <=> obj2`
+- Works like compareTo() in Java
+	- Returns 0 if first operand equals the second
+	- Returns -1 if first operand is less than the second (first then second)
+	- Returns 1 if first operand is greater than the second (second then first)
+- This is how the sort method is implemented
+
+```rb
+str1 = "yo"
+str2 = "hi"
+str3 = "yo"
+str4 = "hi there"
+
+puts str1 <=> str2 # puts 1
+puts str2 <=> str1 # puts -1
+puts str3 <=> str1 # puts 0
+puts str2 <=> str4 # puts -1
+
+# Can also do stuff with the return value
+x = str1 <=> str2
+puts x + 10
+
+# weird quirk
+if str1 <=> str2 == 0 # cannot do this
+
+# have to do this
+x = str1 <=> str2
+if x == 0
+```
+
+### Combining .sort and Combined Comparison
+The `.sort` method in Ruby takes a code block as an optional parameter
+- This can be compared to a *comparator* in Java
+- Allows you to specify how to sort the array
+
+Example: The sort method only does ascending order, but we can specify descending order:
+
+```rb
+my_array = ["yeah", "aaa", "ohboy", "zmur", "h"]
+
+# Specifies to sort in reverse order
+my_array.sort! { |first, second| second <=> first }
+
+# Since it's a block, could put actual code in
+my_array.sort { |first, second| 
+	# more code 
+}
+```

@@ -1,0 +1,269 @@
+# Table of Contents
+[[#If Statements]]
+- [[#Unless]]
+- [[#Comparisons]]
+- [[#In-line Logic]]
+- [[#Switch Statements]]
+
+[[#Loops]]
+- [[#While loop]]
+- [[#Until loop]]
+- [[#For loop]]
+- [[#Iterators]]
+	- [[#The Loop Method|The Loop Method - Simulate do-while]]
+	- [[#Break and Next]]
+	- [[#times iterator|.times Iterator]]
+	- [[#upto and downto methods|.upto and .downto methods]]
+
+---
+
+### If Statements
+- If statements do not need parenthesis around them
+- If statements are ended with an `end` statement (no curly braces)
+- An else statement does not need its own end (only the whole if block)
+- *Ruby uses `elsif` instead of "else if"*
+
+```rb
+if x < 0
+	puts "x is negative"
+elsif x > 0
+	puts "x is positive"
+else
+	puts "x is 0"
+end
+```
+
+#### Unless
+- Keyword substitution for the "if" in an if statement
+- Essentially performs "if not ..."
+- For example: 
+```rb
+unless bool # could be if !bool
+	# executes if bool is false
+else
+	# executes if bool is true
+end
+```
+
+#### Comparisons
+- Can use `==` and `!=`
+- Basic comparisons (>, <, <=, >=) are the same
+- Can still use `&&`, `||`, and `!`
+	- Can also use `and` and `or` words to replace symbols, but not as good style (and might not always work)
+
+#### In-line Logic
+- Can use if and unless statements in line to determine whether something executes
+- Examples below:
+```rb
+error = false
+puts "no error" unless error
+
+return 1 if i > 0
+return -1 # instead of creating an if block for return
+
+return 0 unless a == -1 && b < 0
+
+str = str.upcase unless rand * 10 > 80 or choice != 0
+
+puts "yeah" unless false # always prints
+puts "nope" unless true # never prints
+
+puts "yessir" if true # always prints
+puts "nosir" if false # never prints
+```
+
+### Switch Statements
+Note that they are called "case statements" since the word "switch" is not actually present, but they are the same thing.
+- No break statements are necessary
+
+Syntax for a switch statement in Ruby:
+```rb
+# note indentation, lack of break, and end statement
+case var
+	when val1
+		# code
+	when val2
+		# code
+	when val3
+		# code
+	else # equivalent to default
+		# code
+end
+```
+
+Can also use shorthand syntax
+```rb
+case var
+	when val1 then # simple 1 line of code (EX: puts "text" or x = y)
+	when val2 then # simple 1 line of code
+	when val3 then # simple 1 line of code
+	else # simple 1 line of code
+```
+
+## Loops
+Loops in Ruby, like if-statements, do not need curly braces
+	- Ending is marked with an `end` statement
+
+### While loop
+- While loop has generally normal syntax
+```rb
+i = 4
+while i < 10
+	i += 1
+	puts i
+end
+```
+
+### Until loop
+- Ruby has an "until" loop. Described as a "backwards while loop"
+- Essentially: *Loop until the condition is true* 
+
+Examples:
+```rb
+# Loop until i is 5
+i = 0
+until i == 5
+	i += 1
+	puts i
+end
+
+until a && b || c # Loops until the expression is true
+
+until false # Will loop forever - as opposed to while true
+until true # Will not execute - as opposed to while false
+
+# The following while and until statements are the same
+while i == 5
+until i != 5
+
+while i < 10
+until i >= 10
+
+while bool
+until !bool
+
+while a && b
+until !a || !b
+
+while !a && !b
+until a || b
+
+```
+
+### For loop
+- Similar to bash for loops
+- Loop variable (like i or var) does not need a type defined since Ruby is dynamically typed
+
+**Inclusive/Exclusive**
+- Two dots `..` gives an **inclusive** loop. Meaning that a loop from *x* to *y* will execute with a final value of *y*
+- Three dots `...` gives an **exclusive** loop. Meaning that a loop from *x* to *y* will execute with a final value of *y-1*
+
+Loops in languages such as **C** and **Java** are *exclusive*
+
+Syntax:
+```rb
+# Inclusive: Prints values starting at x and ending at y-1
+for var in x..y
+	puts var
+end
+
+# Exclusive: Prints values starting at x and ending at y
+for var in x...y
+	puts var
+end
+```
+
+### Iterators
+- An iterator in Ruby is a method that repeatedly invokes a block of code
+
+#### The Loop Method
+Can use the loop method to simply loop a block of code for an infinite amount of time
+- Curly braces can replace the `do` and `end` keywords
+- The three loops below are identical and both valid
+	- And all are infinite
+
+```rb
+loop do
+	print "yo"
+end
+
+# Called "loop method" as this is general method syntax (without def obviously)
+loop {
+	print "yo"
+}
+
+loop { print "yo" }
+```
+
+#### Break and Next
+This can be used to emulate a "do..while" loop using the `break` statement
+- Break works the same way as for most programming languages
+- Remember about [[#In-line Logic]]
+	- Can use `break if ...` or `break unless ...`
+	- Can also just use `break` by itself
+
+```rb
+# Do-while implementation
+loop do
+	# some code
+	break if # some condition. Or break unless some condition
+end
+
+# ex:
+i = 0
+loop {
+	puts i
+	i += 1
+	break unless i < 5 # same as break if i >= 5
+}
+```
+
+The `next` keyword is equivalent to *continue* in Java and C
+- Works the same way as *continue*
+- Can use in-line logic the same way as break
+	- i.e. `next if ...` or `next unless ...`
+	- As with break, can also just use `next` by itself
+
+The example below uses *next* to only print odd numbers
+
+```rb
+for i in 1..10
+	next if i % 2 == 0
+	puts i
+end
+```
+
+#### .times iterator
+- Just a very compact for loop
+	- Can be considered better style
+
+Syntax:
+```rb
+x.times { puts "hi"} # puts hi x times
+
+# puts hello 10 times
+10.times do
+	puts "hello"
+end
+```
+
+More information about [[Arrays and Hashes#Iterating with Arrays using each|Iterators]] can be found in the Arrays notes
+
+#### .upto and .downto methods
+- Used to perform operations on a known range of numbers
+- A more Ruby-like solution than using a for-loop that stops when a counter hits a specified value
+- `.upto` counts upwards
+	- works on strings and numbers
+- `.downto` counts downwards
+	- works on numbers
+
+```rb
+10.upto(15) { |num| print num, " "} # prints numbers 10-15 on one line with a space between them
+
+90.downto(70) do |num| puts num end # puts all numbers from 90 down to 70 on a separate line
+
+"A".upto("F") { |letter| puts letter if letter != "E"} # puts all letters between A and F that are not E
+
+65.upto(50) { |num| puts num } # puts nothing since 65 is larger than 50
+50.downto(70) { |num| puts num } # puts nothing since 50 is smaller than 70
+```

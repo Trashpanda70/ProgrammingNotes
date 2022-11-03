@@ -1,0 +1,311 @@
+# Table of Contents
+[[#Arrays]]
+- [[#Iterating with Arrays using each|Iterating with Arrays Using .each]]
+- [[#Iterating through 2D arrays]]
+- [[#Indexing]]
+- [[#Array Methods]]
+	- [[#Deleteing From an Array]]
+	- [[#Array Math]]
+
+[[#Hashes]]
+- [[#Initialization]]
+	- [[#Default Value]]
+- [[#Adding to a Hash]]
+- [[#Iterating Through a Hash]]
+
+---
+
+## Arrays
+Array initialization in Ruby is just like a normal variable but with brackets and comma separated values
+- ex: `my_array = [1, 2, 3, 4]`
+
+Can have an array of any data type (even other arrays or objects, as is usual for programming languages)
+- However, since a single array can have multiple different data types in it
+	- ex: `arr = [4, "str", "", 8.33, false, [5, 7, "yeah"], 7]`
+	- Can mix and match any data type, even other arrays
+
+For 2D arrays indexing is `arr_name[row][col]` as usual
+- Can index into a 2D array if it is mixed with other data types
+```rb
+arr = [4, "str", "", 8.33, false, [5, 7, "yeah"], 7]
+
+arr[0] == 4
+arr[2] == ""
+arr[5] == [5, 7, "yeah"]
+arr[5][2] == "yeah"
+```
+
+- Printing an array results in each value being comma separated and brackets `[]` around the whole array
+
+### Iterating with Arrays using .each
+Used to index through each element of the expression
+- Like a Java for-each loop
+- Can technically be done with any Object with multiple elements
+	- ex: Arrays, hashmaps, custom data structures(?)
+
+Syntax:
+```rb
+object.each { |item|
+	# some code
+}
+
+# Below is equivalent
+
+object.each do |item|
+	# some code
+end
+```
+- *item* is just a random variable name (could be anything)
+	- It is how the current element in the array (or whatever object) can be referenced
+	- Like the variable name of a for-each loop
+- Java equivalent is below for reference
+
+```java
+for (type item : object) {
+	//some code
+}
+```
+
+This type of loop could be one line
+- `array.each { |i| puts i }`
+- Java equivalent: `for (type i : array) { System.out.println(i); }`
+
+Can traverse through the elements in reverse order by using `reverse_each { |i| puts i }`
+
+#### Iterating through 2D arrays
+- Similar to using a nested for-each loop in Java
+- Can also do this with a for loop if the size of the array is known
+```rb
+s = [["ham", "swiss"], ["turkey", "cheddar"], ["peanut butter", "jelly"]]
+
+# to print each array on a line, without the commas or brackets
+s.each { |a| 
+	a.each { |x| 
+		print "#{x}"
+	}
+	puts "" # print just a new line
+}
+```
+
+### Indexing
+Ruby array indexing works like most languages (start at 0) but with one addition: *negative indexing*
+
+Can use negative indices to index *backwards* through the array
+- An index of -1 is the last element
+- An index of -2 is the second to last element
+- And so on
+
+NOTE: Still cannot index off the end of an array
+- If an array has 3 elements (last element at index 2). Trying to get the element at index 3 will provide `nil`
+- It will not crash the program (unless it returning `nil` does something in the future)
+
+Examples:
+```rb
+my_array = [1, 3, 5, 7, 9, 11]
+
+my_array[0] == 1
+my_array[4] == 9
+my_array[-1] == 11
+my_array[-3] == 7
+
+my_array[0] == my_array[-6] # -1 * size will reference first element
+```
+
+### Array Methods
+- `at(idx)` - Another way of accessing array elements. Returns the element at index `idx`
+- `reverse / reverse!` - Reverse the contents of the Array
+- `sort` - Covered [[Methods, Blocks, and Sorting#Using the Sort method|here]]
+- `empty?` - Returns true if the array is empty, false otherwise
+- `clear` - Removes all elements from the array
+- `include?(obj)` - Returns true if the given object is in the array (checked using `==`) 
+- `length` - Returns the length of the array. 
+	- Has `size` as an alias
+- `push(obj, ...)` - Pushes the given object(s) onto the end of an array. Can chain multiple together.
+	- Can use the push operator `<<` to achieve the same effect
+		- `arr.push(5, 7) == arr << 5 << 7`
+		- Called the concatenation operator (also known as "the shovel")
+	- Aliased as `append`
+- `pop` - Removes the last element from the array and returns it 
+	- Can specify an optional parameter (`push(n)`) that will pop *n* elements from the array and return them as an array
+- `collect` - Covered [[Blocks, Procs, and Lambdas#Applying a Code Block with Collect|here]]
+- More advanced array methods/topic can be found here (link page when done)
+
+#### Deleteing From an Array
+There are multiple ways to delete from an array, however the two listed here are the most basic
+
+**delete and delete_at**
+- The `delete(obj)` method is used to remove all occurences of the specified object from the array. Returns the deleted item or `nil` if it was not found
+	- Can also provide a block of code (`delete(obj) {block}`) that will act as the default value for if a value was not found rather than returning `nil`
+- The `delete_at(idx)` method deletes the value at the specified index and returns it (or `nil` if it was not found)
+	- Cannot do the code block trick with this method to change the `nil` return
+
+```rb
+arr = [1, 4, 4, 5, "s1", 7, "s2"]
+
+arr.delete(1) # returns 1 and removes it from arr
+arr.delete(-8) # returns nil and the array is unchanged
+arr.delete(10) {"not found"} # returns "not found" and the array is unchanged
+arr.delete(4) # returns 4 and removes both occurences of 4 from the array
+
+arr.delete_at(2) # returns 4 and removes the second 4 from the array
+arr.delete_at(-1) # returns "s2" and removes it from the array
+arr.delete_at(15) # returns nil and the array in unchanged
+```
+
+#### Array Math
+Can do math on arrays to add or delete elements in bulk
+- These functions are technically implemented as methods, but syntactically do not appear that way
+- Since these are functions, they return a value (can assign to a variable or print)
+- This also means the contents of the original arrays are preserved 
+	- The same way variable values are preserved
+
+**Four functions**
+1. To add elements to an array use the addition operator `+`
+	- Adds the added elements to the end of the first array, even if there are repeats
+2. To subtract elements from an array use the subtraction operator `-`
+	- Subtracts elements from the first array that are in the second array. If no elements are shared between arrays nothing happens
+	- Same thing can be done with the `.difference` method
+		- Takes an array (or multiple arrays) as an argument
+		- x - y = x.difference(y)
+		- x - y - z = x.difference(y, z)
+3. To get the intersection of two arrays (elements they have in common) use `&`
+	- Returns an array with values from both arrays being compared
+	- Order is preserved from first array
+	- Same as using the `.insersection` method
+		- Similar semantics to `-` and the `difference` method
+		- x & y = x.intersection(y)
+		- x & y & z = x.intersection(y, z)
+4. To perform a union of two arrays use `|`
+	- Appends elements of second array to first array *ignoring duplicates*
+	- Preserves order of both arrays
+	- Same as using the `.union` method
+		- Similar semantics to `-` and the `difference` method
+		- x | y = x.union(y)
+		- x | y | z = x.union(y, z)
+
+```rb
+x = [1, 2, 3, 4]
+y = [3, 4, 5, 6]
+z = [69, 70]
+
+puts x - y # puts [1, 2]
+puts x - z # puts [1, 2, 3, 4]
+
+puts x + y # puts [1, 2, 3, 4, 3, 4, 5, 6]
+puts z + y # puts [69, 70, 3, 4, 5, 6]
+
+puts x & y # puts [3, 4]
+puts x & z # puts []
+
+puts x | y # puts [1, 2, 3, 4, 5, 6]
+puts z | x # puts [69, 70, 1, 2, 3, 4]
+```
+
+For all these functions, multiple arrays can be compounded 
+- `arr1 + arr2 - arr3`
+- `(arr1 + arr2) & arr3 & arr4`
+
+## Hashes
+A collection of key-value pairs
+- Like a Java map or Python dictionary
+- Any Ruby object can be used for a key or value (Everything in Ruby is an object)
+- Hashes can mix and match data types for both keys and values
+	- Like how array values can be mixed data types
+
+### Initialization
+```rb
+name = {
+	key1 => value1,
+	key2 => value2,
+	key3 => value3,
+	keyX => valueX
+}
+
+name[key1] == value1
+name[keyX] == valueX
+# If the keys are integers, then syntax is the same as an array
+```
+- Note that the curly braces `{}` are ***not*** replaceable with do..end
+
+Can also declare a hash using `Hash.new` 
+- Same as declaring an empty hash
+```rb
+my_hash = Hash.new
+my_hash = {}
+```
+
+#### Default Value
+Can give a hash declared with `Hash.new` a *default value*
+- Trying to access the value of a key that does not exist in a hash will return the default value
+- If not specified, the default value is `nil`
+
+Syntax for giving a default value: `hash_name = Hash.new(default value)`
+- Generally will be a String (or 0) but can be anything
+
+### Adding to a Hash
+Can declare a new hash key-value pair individually if not done in initialization syntax
+- Same syntax as referencing a hash, just declare a new one and set it equal to something
+```rb
+hash = Hash.new
+# add new values to hash one at a time
+hash[1] = "one"
+hash["pet"] = "cat"
+hash["true"] = true
+```
+
+Remember to access a hash value just use `hash_name[key]`
+
+### Iterating Through a Hash
+Can use [[#Iterating with Arrays using each|.each]] to iterate through a hash like normal
+- Will print each key-value pair between brackets
+- Can also iterate through keys and values *at the same time*
+	- Specifying a second variable between the pipes `| |` will automatically loop with the keys as well
+	- The same amount of iterations are performed, it just gives access to each value as well
+
+```rb
+#Using the following hash
+hash = {
+	"one" => 1,
+	"two" => 2,
+	"pet" => "dog",
+	true => "true!"
+}
+
+# normal iteration with .each
+hash.each { |k| puts "#{k}" }
+# output:
+["one", 1]
+["two", 2]
+["pet", "dog"]
+[true, "true!"]
+
+# iterating with both the key and the value using .each
+hash.each { |k, v| puts "#{k} maps to #{v}" }
+# output
+one maps to 1
+two maps to 2
+pet maps to dog
+true maps to true!
+```
+If only the keys or values are needed, loop through with both and only use the variable needed
+
+**OR**
+
+Can use the `.each_key` or `.each_value` methods
+- Work the same as `.each` but only iterate through the key or value
+- Only need to specify one variable between pipes (for the key or value)
+
+```rb
+my_hash = {
+	"one" => 1
+	"two" => 2
+	"three" => 3
+	"four" => 4
+}
+
+my_hash.each_key { |k| puts k} # prints out each key
+
+my_hash.each_value { |v|
+	puts v * 2 if v % 2 == 0
+} # prints out 2 times each even value
+```

@@ -1,0 +1,99 @@
+{
+  "main": {
+    "id": "1a3cb34c4d8f0369",
+    "type": "split",
+    "children": [
+      {
+        "id": "85418b1d29248d44",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "_Obsidian Formatting.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "74346b985e1e45df",
+    "type": "split",
+    "children": [
+      {
+        "id": "e092402815557d52",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9d19bc4083265823",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "4b4e74fd194b3273",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 175
+  },
+  "right": {
+    "id": "217072a77b4e02d0",
+    "type": "split",
+    "children": [
+      {
+        "id": "f69dfbf2fd99d84d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dc76c45d04387713",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "_Obsidian Formatting.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "85418b1d29248d44",
+  "lastOpenFiles": [
+    "_Obsidian Formatting.md",
+    "[[_Obsidian.md",
+    "_Attachments/TestImage.jpeg",
+    "Link Test.md",
+    "Attachments/Screen Shot 2022-02-01 at 3.04.31 PM.png",
+    "T.md"
+  ]
+}

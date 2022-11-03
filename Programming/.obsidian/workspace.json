@@ -1,0 +1,148 @@
+{
+  "main": {
+    "id": "8a174f86d0d7265e",
+    "type": "split",
+    "children": [
+      {
+        "id": "d29dc18108026a57",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dd6aaad2fdb7dd5a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Ruby/Blocks, Procs, and Lambdas.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "b9f82958ae290288",
+    "type": "split",
+    "children": [
+      {
+        "id": "6bcd64acfc48a569",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f3d73e83a95c2e10",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "byCreatedTimeReverse"
+              }
+            }
+          },
+          {
+            "id": "4b55a1ebac5b74ef",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "0f71d8da9213cb90",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "6adab2110c045c45",
+    "type": "split",
+    "children": [
+      {
+        "id": "1aa24a4bd460c5dc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "49d9ca7d8c0b6c5d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Ruby/Blocks, Procs, and Lambdas.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "2724876817582c3f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Ruby/Blocks, Procs, and Lambdas.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "dc884b57784fd8e1",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "c839f320a1bb7fed",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Ruby/Blocks, Procs, and Lambdas.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "dd6aaad2fdb7dd5a",
+  "lastOpenFiles": [
+    "Ruby/Hashes and Symbols.md",
+    "Ruby/Basics, Strings, Math, and More.md",
+    "Ruby/Methods, Blocks, and Sorting.md",
+    "Ruby/Blocks, Procs, and Lambdas.md",
+    "Ruby/Arrays and Hashes.md",
+    "Ruby/If-Statements and Loops.md"
+  ]
+}
