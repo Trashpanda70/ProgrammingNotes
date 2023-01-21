@@ -7,6 +7,7 @@ Ruby was the first language added so I could learn it for RPG Maker purposes. Al
 These notes are formatted for [Obsidian Note Taking Software](https://obsidian.md/).
 
 Languages Added
+- Obsidian Formatting
 - Ruby (incomplete)
 - Java Advanced (Not yet Started)
 - C++ (very incomplete)
