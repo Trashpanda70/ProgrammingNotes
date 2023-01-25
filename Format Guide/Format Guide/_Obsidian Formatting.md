@@ -375,6 +375,12 @@ Showcase order: Normal, large, Large, LARGE, huge, Huge
 
 ${\frac 1 2}$ $\large{{\frac 1 2}}$ $\Large{{\frac 1 2}}$ $\LARGE{{\frac 1 2}}$ $\huge{{\frac 1 2}}$ $\Huge{{\frac 1 2}}$ 
 
+###### Matrices
+Can make matrices by using `\begin{bmatrix}` and end with `\end{bmatrix}`
+- Terminate row with `\\`
+$\begin{bmatrix}a\ b\\c\ d\end{bmatrix}$
+- `\begin{bmatrix}a\ b\\c\ d\end{bmatrix}`
+
 ## Tables
 To create a Table
 - Make the header row by separating columns with a pipe `|`
