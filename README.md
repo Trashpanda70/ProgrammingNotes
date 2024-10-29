@@ -11,5 +11,5 @@ The C++ section assumes basic C knowledge. I will not post my C notes since they
 Languages Added
 - Obsidian Formatting
 - Ruby (incomplete)
-- Java Advanced (Not yet Started)
+- Java Advanced (incomplete)
 - C++ (incomplete)
