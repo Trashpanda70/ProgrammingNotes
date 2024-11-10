@@ -10,7 +10,7 @@
 ---
 
 ## Basics of Classes
-Everything in Ruby is a class (almost everything, as mentioned [[6. Blocks, Procs, and Lambdas#Blocks|blocks are an exception]]) 
+Everything in Ruby is a class (almost everything, as mentioned [[7. Blocks, Procs, and Lambdas#Blocks|blocks are an exception]]) 
 - Objects are created using `ClassName.new`
 	- Already seen this with `Hash.new` and `Proc.new`
 	- When creating classes, a `new` method does not need to be made. Instead, make a method called `initialize` to act as a constructor
@@ -87,7 +87,7 @@ puts Tracker.count # puts 3
 Previously, in order to get a field we needed a method with the field name (or a different name, but that is less convenient) that simply returned the field due to access issues.
 
 If we wanted to set the field, we would need a method like the one below.
-- To see more on this go to [[0. Miscellaneous Information#Setter Methods|notes on setter methods]]
+- To see more on this go to [[1. Miscellaneous Information#Setter Methods|notes on setter methods]]
 ```rb
 def set_field=(id)
 	@id = id
